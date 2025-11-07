@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Library | Knights Combat Robotics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --space-blue: #68ABE8;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --card-bg: #111111;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: var(--space-blue);
+            --accent-hover: #7db8ec;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(104, 171, 232, 0.3);
+            transition: all 0.3s;
+        }
+
+        .logo-img:hover {
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .page-hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 120px;
+            padding-bottom: 3rem;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(104, 171, 232, 0.15) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .hero-content p {
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            color: var(--text-secondary);
+        }
+
+        /* Filters */
+        .filters-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .filter-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* Robot Grid */
+        .robots-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem 6rem;
+        }
+
+        .robots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .robot-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+
+        .robot-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(104, 171, 232, 0.2);
+            border-color: rgba(104, 171, 232, 0.5);
+        }
+
+        .robot-viewer {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .robot-card:hover .robot-viewer canvas {
+            animation: none !important;
+        }
+
+        .robot-info {
+            padding: 1.5rem;
+        }
+
+        .robot-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .robot-class {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .robot-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .robot-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .spec-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .spec-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .spec-value {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .status-active {
+            background: rgba(104, 171, 232, 0.2);
+            color: var(--accent);
+        }
+
+        .status-development {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .status-retired {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--darker-bg);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .robots-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .robot-specs {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="KCR Logo" class="logo-img">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="robots.html">Robots</a></li>
+                <li><a href="sponsors.html">Sponsors</a></li>
+                <li><a href="index.html#team">Team</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <div class="hero-background"></div>
+        <div class="hero-content">
+            <h1>Robot Library</h1>
+            <p>Explore our collection of combat robots designed and built by UCF students</p>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <div class="filters-section">
+        <button class="filter-btn active" data-filter="all">All Robots</button>
+        <button class="filter-btn" data-filter="1lb">1lb Antweight</button>
+        <button class="filter-btn" data-filter="3lb">3lb Beetleweight</button>
+        <button class="filter-btn" data-filter="active">Active</button>
+        <button class="filter-btn" data-filter="development">In Development</button>
+    </div>
+
+    <!-- Robots Grid -->
+    <section class="robots-section">
+        <div class="robots-grid" id="robotsGrid">
+            <!-- Robot cards will be generated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p style="color: var(--text-secondary);">
+                © 2024 Knights Combat Robotics | University of Central Florida
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Robot data
+        const robots = [
+            {
+                name: "Flashpoint",
+                class: "1lb Antweight",
+                weightClass: "1lb",
+                status: "development",
+                weapon: "Eggbeater",
+                material: "Plastic",
+                description: "A fast and agile plastic eggbeater robot designed for rapid spinning attacks and quick maneuvers in the arena.",
+                model: null // Replace with actual GLB path when available
+            },
+            {
+                name: "Thunderclap",
+                class: "3lb Beetleweight",
+                weightClass: "3lb",
+                status: "development",
+                weapon: "Undercutter",
+                material: "Steel",
+                description: "A powerful steel undercutter designed to launch opponents into the air with devastating upward attacks.",
+                model: null // Replace with actual GLB path when available
+            }
+            // Add more robots here as they're designed
+        ];
+
+        // Create robot cards
+        function createRobotCard(robot) {
+            const card = document.createElement('div');
+            card.className = 'robot-card';
+            card.setAttribute('data-weight', robot.weightClass);
+            card.setAttribute('data-status', robot.status);
+
+            const statusClass = `status-${robot.status}`;
+            const statusText = robot.status.charAt(0).toUpperCase() + robot.status.slice(1);
+
+            card.innerHTML = `
+                <div class="robot-viewer" id="viewer-${robot.name.toLowerCase()}"></div>
+                <div class="robot-info">
+                    <span class="status-badge ${statusClass}">${statusText}</span>
+                    <h3 class="robot-name">${robot.name}</h3>
+                    <span class="robot-class">${robot.class}</span>
+                    <p class="robot-description">${robot.description}</p>
+                    <div class="robot-specs">
+                        <div class="spec-item">
+                            <span class="spec-label">Weapon</span>
+                            <span class="spec-value">${robot.weapon}</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Material</span>
+                            <span class="spec-value">${robot.material}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Initialize 3D viewer for each robot
+        function init3DViewer(viewerId, robotData) {
+            const container = document.getElementById(viewerId);
+            if (!container) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setClearColor(0x000000, 0);
+            container.appendChild(renderer.domElement);
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+
+            const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight1.position.set(5, 5, 5);
+            scene.add(directionalLight1);
+
+            const directionalLight2 = new THREE.DirectionalLight(0x68ABE8, 0.4);
+            directionalLight2.position.set(-5, -5, -5);
+            scene.add(directionalLight2);
+
+            // Create placeholder geometry (cube with beveled edges)
+            const geometry = new THREE.BoxGeometry(1.5, 1, 1.5);
+            const material = new THREE.MeshStandardMaterial({ 
+                color: 0x68ABE8,
+                metalness: 0.7,
+                roughness: 0.3
+            });
+            const cube = new THREE.Mesh(geometry, material);
+            scene.add(cube);
+
+            // Add edges for better visibility
+            const edges = new THREE.EdgesGeometry(geometry);
+            const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.3, transparent: true });
+            const wireframe = new THREE.LineSegments(edges, lineMaterial);
+            cube.add(wireframe);
+
+            // Position camera for isometric view
+            camera.position.set(3, 3, 3);
+            camera.lookAt(0, 0, 0);
+
+            let isHovering = false;
+            let autoRotate = true;
+
+            // Mouse events
+            container.parentElement.addEventListener('mouseenter', () => {
+                isHovering = true;
+            });
+
+            container.parentElement.addEventListener('mouseleave', () => {
+                isHovering = false;
+            });
+
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                if (isHovering) {
+                    cube.rotation.y += 0.02;
+                } else {
+                    cube.rotation.y += 0.005;
+                }
+                cube.rotation.x = 0.2;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                if (container.clientWidth > 0) {
+                    camera.aspect = container.clientWidth / container.clientHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(container.clientWidth, container.clientHeight);
+                }
+            });
+        }
+
+        // Render all robots
+        const grid = document.getElementById('robotsGrid');
+        robots.forEach(robot => {
+            const card = createRobotCard(robot);
+            grid.appendChild(card);
+            
+            // Initialize 3D viewer after card is added to DOM
+            setTimeout(() => {
+                init3DViewer(`viewer-${robot.name.toLowerCase()}`, robot);
+            }, 100);
+        });
+
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const robotCards = document.querySelectorAll('.robot-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+
+                // Filter cards
+                robotCards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'block';
+                    } else if (filter === 'active' || filter === 'development') {
+                        if (card.getAttribute('data-status') === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    } else {
+                        if (card.getAttribute('data-weight') === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+
+        // Mobile menu
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+    </script>
+</body>
+</html>
