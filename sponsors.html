@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Become a Sponsor | Knights Combat Robotics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --space-blue: #68ABE8;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --card-bg: #111111;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: var(--space-blue);
+            --accent-hover: #7db8ec;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(104, 171, 232, 0.3);
+            transition: all 0.3s;
+        }
+
+        .logo-img:hover {
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .logo-impact {
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo-impact span:nth-child(2) {
+            color: var(--accent);
+            position: relative;
+            left: -2px;
+        }
+
+        .logo-impact::after {
+            content: '⚡';
+            position: absolute;
+            right: -15px;
+            top: -5px;
+            font-size: 0.8em;
+            color: var(--accent);
+            animation: spark 2s ease-in-out infinite;
+        }
+
+        @keyframes spark {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .sponsor-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 120px;
+            padding-bottom: 4rem;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(104, 171, 232, 0.15) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero-content p {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Main Content */
+        .content-section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-intro {
+            max-width: 800px;
+            margin: 0 auto 5rem;
+            text-align: center;
+        }
+
+        .section-intro h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-intro p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Tier Cards */
+        .sponsor-tiers {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            margin-bottom: 5rem;
+        }
+
+        .tier-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 3rem;
+            border: 2px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .tier-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .tier-card.gold {
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .tier-card.gold:hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.1);
+        }
+
+        .tier-card.silver {
+            border-color: rgba(192, 192, 192, 0.3);
+        }
+
+        .tier-card.silver:hover {
+            border-color: rgba(192, 192, 192, 0.5);
+            box-shadow: 0 20px 40px rgba(192, 192, 192, 0.1);
+        }
+
+        .tier-card.bronze {
+            border-color: rgba(205, 127, 50, 0.3);
+        }
+
+        .tier-card.bronze:hover {
+            border-color: rgba(205, 127, 50, 0.5);
+            box-shadow: 0 20px 40px rgba(205, 127, 50, 0.1);
+        }
+
+        .tier-header {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tier-header h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .tier-card.gold h3 { color: #FFD700; }
+        .tier-card.silver h3 { color: #C0C0C0; }
+        .tier-card.bronze h3 { color: #CD7F32; }
+
+        .tier-amount {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .tier-benefits {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .tier-benefits li {
+            color: var(--text-secondary);
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            padding-left: 2.5rem;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .tier-benefits li:hover {
+            background: rgba(104, 171, 232, 0.05);
+            transform: translateX(5px);
+        }
+
+        .tier-benefits li::before {
+            content: '✓';
+            position: absolute;
+            left: 0.8rem;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* Tier Logos Section */
+        .tier-logos {
+            min-height: 200px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tier-logos-placeholder {
+            color: var(--text-secondary);
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* Why Sponsor Section */
+        .why-sponsor {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 4rem;
+            margin-bottom: 5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .why-sponsor h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .benefit-item {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .benefit-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(104, 171, 232, 0.3);
+        }
+
+        .benefit-item h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .benefit-item p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, rgba(104, 171, 232, 0.05) 0%, transparent 100%);
+            border-radius: 16px;
+            margin-bottom: 3rem;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 1rem;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(104, 171, 232, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--text-secondary);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--darker-bg);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .tier-card {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .tier-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .tier-benefits {
+                grid-template-columns: 1fr;
+            }
+
+            .why-sponsor {
+                padding: 2rem;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-impact">
+                    <span>K</span><span>C</span><span>R</span>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#robots">Robots</a></li>
+                <li><a href="sponsors.html">Sponsors</a></li>
+                <li><a href="index.html#team">Team</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="sponsor-hero">
+        <div class="hero-background"></div>
+        <div class="hero-content">
+            <h1>Partner With Us</h1>
+            <p>Help us build the future of combat robotics at UCF and beyond</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="content-section">
+        <!-- Why Sponsor Section -->
+        <div class="why-sponsor">
+            <h2>Why Sponsor Knights Combat Robotics?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <h3>Brand Visibility</h3>
+                    <p>Get your brand in front of engineering students, tech enthusiasts, and the combat robotics community across the United States.</p>
+                </div>
+                <div class="benefit-item">
+                    <h3>Support Innovation</h3>
+                    <p>Directly support talented student engineers as they design, build, and compete with cutting-edge combat robots.</p>
+                </div>
+                <div class="benefit-item">
+                    <h3>Community Impact</h3>
+                    <p>Help grow the combat robotics community and inspire the next generation of engineers and makers.</p>
+                </div>
+                <div class="benefit-item">
+                    <h3>Competition Exposure</h3>
+                    <p>Your brand will be showcased at competitions and events throughout the year, reaching a passionate audience.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Intro -->
+        <div class="section-intro">
+            <h2>Sponsorship Tiers</h2>
+            <p>Choose the sponsorship level that works best for your organization. All sponsors will be featured on our website and receive recognition for their support of UCF's combat robotics program.</p>
+        </div>
+
+        <!-- Sponsorship Tiers -->
+        <div class="sponsor-tiers">
+            <!-- Gold Tier -->
+            <div class="tier-card gold">
+                <div>
+                    <div class="tier-header">
+                        <h3>Gold Tier</h3>
+                        <span class="tier-amount">Amount TBD</span>
+                    </div>
+                    <ul class="tier-benefits">
+                        <li>Large logo placement on all team shirts</li>
+                        <li>Prominent logo display on website homepage</li>
+                        <li>Large logo placement on 12lb and 30lb robots (if built)</li>
+                        <li>Priority mentions at all competitions and public events</li>
+                        <li>Regular social media recognition and shoutouts</li>
+                        <li>Featured sponsor in all press releases and media</li>
+                        <li>Invitations to exclusive team events and demonstrations</li>
+                        <li>Direct engagement opportunities with team members</li>
+                    </ul>
+                </div>
+                <div class="tier-logos">
+                    <div class="tier-logos-placeholder">Space reserved for Gold sponsors</div>
+                </div>
+            </div>
+
+            <!-- Silver Tier -->
+            <div class="tier-card silver">
+                <div>
+                    <div class="tier-header">
+                        <h3>Silver Tier</h3>
+                        <span class="tier-amount">Amount TBD</span>
+                    </div>
+                    <ul class="tier-benefits">
+                        <li>Medium logo placement on team shirts</li>
+                        <li>Logo display on website sponsors page</li>
+                        <li>Medium logo placement on 12lb and 30lb robots (if built)</li>
+                        <li>Social media recognition and periodic shoutouts</li>
+                        <li>Mentions at competitions and events</li>
+                        <li>Inclusion in team communications and updates</li>
+                    </ul>
+                </div>
+                <div class="tier-logos">
+                    <div class="tier-logos-placeholder">Space reserved for Silver sponsors</div>
+                </div>
+            </div>
+
+            <!-- Bronze Tier -->
+            <div class="tier-card bronze">
+                <div>
+                    <div class="tier-header">
+                        <h3>Bronze Tier</h3>
+                        <span class="tier-amount">Amount TBD</span>
+                    </div>
+                    <ul class="tier-benefits">
+                        <li>Small logo placement on team shirts</li>
+                        <li>Logo display on website sponsors page</li>
+                        <li>Small logo placement on 12lb and 30lb robots (if built)</li>
+                        <li>Social media thank you post</li>
+                        <li>Recognition in team materials</li>
+                    </ul>
+                </div>
+                <div class="tier-logos">
+                    <div class="tier-logos-placeholder">Space reserved for Bronze sponsors</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2>Ready to Make an Impact?</h2>
+            <p>Join us in building the future of combat robotics. Contact us today to discuss sponsorship opportunities.</p>
+            <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+                <a href="index.html#contact" class="btn btn-primary">Contact Us</a>
+                <a href="mailto:knightscombatrobotics@gmail.com" class="btn btn-secondary">Email Directly</a>
+            </div>
+        </div>
+
+        <!-- Additional Info -->
+        <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">
+            <p style="margin-bottom: 0.5rem;">We are in the process of establishing 501(c)(3) status.</p>
+            <p>All sponsorship tiers and benefits are subject to customization based on your organization's needs.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p style="color: var(--text-secondary);">
+                © 2024 Knights Combat Robotics | University of Central Florida
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+    </script>
+</body>
+</html>
